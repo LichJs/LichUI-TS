@@ -1,0 +1,9 @@
+<div toggleable="md" type="dark" variant="dark" fixed="top">
+  <div target="nav_collapse"></div>
+  <a href="#">cooperation-html-vue</a>
+  <div is-nav id="nav_collapse">
+    <div>
+      <div v-for="link in links" :key="link.name" :to="link.path" exact>{{link.name}}</div>
+    </div>
+  </div>
+</div>
