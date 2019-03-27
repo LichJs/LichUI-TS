@@ -16,7 +16,7 @@ export class NavbarComponent extends Vue {
     new Link('List', '/list')
   ];
 
-  protected logger: Logger;
+  protected logger!: Logger;
 
   @Watch('$route.path')
   pathChanged () {

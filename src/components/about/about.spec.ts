@@ -28,8 +28,15 @@ describe('About component', () => {
     directiveTest.createComponent();
 
     await directiveTest.execute((vm) => {
-      expect(vm.$el.querySelector('.repo-link').getAttribute('href')).to.equal('https://github.com/ducksoupdev/vue-webpack-typescript');
-      assert.calledWith(loggerSpy, 'about is ready!');
+      const repoEl = vm.$el.querySelector('.repo-link');
+      if (!repoEl) {
+        assert.calledWith(loggerSpy, 'can\'t find repo-link element.');
+      } else {
+        expect(
+          repoEl.getAttribute('href')
+        ).to.equal('https://github.com/ducksoupdev/vue-webpack-typescript');
+        assert.calledWith(loggerSpy, 'about is ready!');
+      }
     });
   });
 });

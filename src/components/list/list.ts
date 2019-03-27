@@ -14,7 +14,7 @@ interface UserResponse {
 export class ListComponent extends Vue {
 
   items: UserResponse[] = [];
-  protected axios;
+  protected axios: any;
   private url = 'https://jsonplaceholder.typicode.com/users';
 
   constructor () {
@@ -32,7 +32,7 @@ export class ListComponent extends Vue {
     if (!this.items.length) {
       this.axios.get(this.url).then((response: AxiosResponse) => {
         this.items = response.data;
-      }, (error) => {
+      }, (error: any) => {
         console.error(error);
       });
     }

@@ -60,8 +60,15 @@ describe('Navbar component', () => {
     });
 
     it('should render correct about contents', async () => {
+
       await directiveTest.execute((vm) => {
-        expect(vm.$el.querySelector('div.about').textContent).to.equal('About');
+        const aboutEl = vm.$el.querySelector('div.about');
+        if (!aboutEl) {
+          assert.calledWith(loggerSpy, 'can\'t find about element');
+        } else {
+          expect(aboutEl.textContent).to.equal('About');
+        }
+
       });
     });
   });
@@ -78,9 +85,13 @@ describe('Navbar component', () => {
 
     it('should render correct about contents', async () => {
       await directiveTest.execute((vm) => {
-        expect(vm.$el.querySelector('div.list').textContent).to.equal('List');
+        const listEl = vm.$el.querySelector('div.list');
+        if (!listEl) {
+          assert.calledWith(loggerSpy, 'can\'t find list element');
+        } else {
+          expect(listEl.textContent).to.equal('List');
+        }
       });
     });
   });
-
 });

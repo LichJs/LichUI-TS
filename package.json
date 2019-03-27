@@ -26,6 +26,7 @@
     "test:watch": "cross-env NODE_ENV=development karma start config/karma.unit.js --singleRun=false --auto-watch"
   },
   "dependencies": {
+    "@types/chai": "^4.1.7",
     "axios": "~0.17.1",
     "vue": "~2.5.13",
     "vue-class-component": "~6.1.2",
@@ -33,6 +34,7 @@
     "vue-router": "~3.0.1"
   },
   "devDependencies": {
+    "@types/lodash.merge": "^4.6.6",
     "@types/mocha": "~2.2.47",
     "@types/node": "~9.4.0",
     "@types/sinon": "~4.1.3",

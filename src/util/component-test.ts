@@ -9,7 +9,7 @@ export interface IComponents {
 
 export class ComponentTest {
 
-  public vm: Vue;
+  public vm!: Vue;
 
   constructor (private template: string, private components: IComponents) {
   }
