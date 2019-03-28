@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+@import "./util";
+@import "./border";
+
+.lich-p-0 {
+  padding: 0 !important;
+}
+
+.lich-border {
+  @include border(
+    $direction: all,
+    $size: 1px,
+    $color: #ddd,
+    $style: solid
+  );
+}
+
+.lich-border-bottom {
+  @include border(
+    $direction: bottom,
+    $size: 1px,
+    $color: #ddd,
+    $style: solid
+  );
+}
+
+/* 圆角边框自定义多个角 */
+.lich-border-radius {
+  @include border( 
+    $radius: (10px, 20px 30px, 40px) 
+  );
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  @include root-font-size();
+}
+
+body {
+  /* rem2px的使用方式, 仅用于临时计算 */
+  border-width: rem2px(.6);
+  background-color: #f8f8f8;
+  font-size: px2rem(28);
+  font-family: "Microsoft YaHei";
+}
+
+.container {
+  background-color: #fff;
+}
+
+header {
+  height: px2rem(300);
+  line-height: px2rem(300);
+  text-align: center;
+  background-color: #f2f2f2;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    width: px2rem(200);
+    justify-content: center;
+  }
+  .icon {
+    margin-bottom: px2rem(20);
+    width: px2rem(120);
+    height: px2rem(120);
+    line-height: px2rem(120);
+    text-align: center;
+    background-color: #f2f2f2;
+  }
+}
+
+main {
+  padding: px2rem(20);
+
+  h3 {
+    position: relative;
+    margin-top: px2rem(50);
+    margin-left: px2rem(26);
+    @include font-size(30px);
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: px2rem(-20);
+      width: px2rem(12);
+      height: 100%;
+      background-color: #fc8200;
+    }
+  }
+}
+
+footer {
+  height: px2rem(150);
+  line-height: px2rem(150);
+  text-align: center;
+  background-color: #f2f2f2;
+}

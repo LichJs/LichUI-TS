@@ -2,6 +2,13 @@ import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import { makeHot, reload } from './util/hot-reload';
 
+// 路由数组.
+const routers = [
+  { path: '/', component: './components/home' },
+  { path: '/about', component: './components/about' },
+  { path: '/list', component: './components/list' }
+];
+////////////////// ========================================
 const homeComponent = () => import('./components/home').then(({ HomeComponent }) => HomeComponent);
 const aboutComponent = () => import('./components/about').then(({ AboutComponent }) => AboutComponent);
 const listComponent = () => import('./components/list').then(({ ListComponent }) => ListComponent);
