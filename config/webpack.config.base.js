@@ -1,6 +1,8 @@
 const helpers = require('./helpers')
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const path =  require('path')
+
 
 let config = {
   entry: {
@@ -16,7 +18,10 @@ let config = {
   resolve: {
     extensions: ['.ts', '.js', '.html'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': path.resolve( __dirname, './src'),
+      '@component': path.resolve(__dirname, './src/component'),
+      '@config': path.resolve(__dirname),
     }
   },
   module: {

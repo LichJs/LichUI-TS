@@ -1,5 +1,8 @@
 {
   "extends": "tslint-config-standard",
+  "compilerOptions": {
+    "allowJs": true
+  },
   "rules": {
     "semicolon": true,
     "no-var-requires": false
