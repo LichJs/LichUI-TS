@@ -3,7 +3,7 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+
 const autoprefixer = require('autoprefixer')
 const webpackConfig = require('./webpack.config.base')
 const helpers = require('./helpers')
@@ -120,8 +120,7 @@ webpackConfig.plugins = [...webpackConfig.plugins,
   }),
   new DefinePlugin({
     'process.env': env
-  }),
-  new FaviconsWebpackPlugin(helpers.root('/src/icon.png'))
+  })
 ]
 
 module.exports = webpackConfig

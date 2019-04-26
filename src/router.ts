@@ -1,19 +1,30 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
-import hotreload from './hotreload';
-import routerConfig from '../config/router';
 
-hotreload();
+const homeComponent = () => import(/* webpackChunkName: 'home' */'./components/home').then(({ HomeComponent }) => HomeComponent);
+const aboutComponent = () => import(/* webpackChunkName: 'about' */'./components/about').then(({ AboutComponent }) => AboutComponent);
+const listComponent = () => import(/* webpackChunkName: 'list' */'./components/list').then(({ ListComponent }) => ListComponent);
 
-Vue.use(VueRouter);
-
-export const createRoutes: () => RouteConfig[] = () => {
-  let router: RouteConfig[] = [];
-  routerConfig.map((item: any) => {
-    let route = item.router;
-    router.push(route);
-  });
-  return router;
-};
-
-export const createRouter = () => new VueRouter({ mode: 'history', routes: createRoutes() });
+export default [{
+  name: './components/home',
+  component: homeComponent,
+  router: {
+    path: '/',
+    component: homeComponent
+  },
+  reloadfun: (require('./components/home')).HomeComponent
+}, {
+  name: './components/about',
+  component: aboutComponent,
+  router: {
+    path: '/about',
+    component: aboutComponent
+  },
+  reloadfun: (require('./components/about')).AboutComponent
+}, {
+  name: './components/list',
+  component: listComponent,
+  reloadfun: (require('./components/list')).ListComponent,
+  router: {
+    path: '/list',
+    component: listComponent
+  }
+}];

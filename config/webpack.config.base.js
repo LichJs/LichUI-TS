@@ -1,8 +1,7 @@
 const helpers = require('./helpers')
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const path =  require('path')
-
+const path = require('path');
 
 let config = {
   entry: {
@@ -19,15 +18,12 @@ let config = {
     extensions: ['.ts', '.js', '.html'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': path.resolve( __dirname, './src'),
-      '@component': path.resolve(__dirname, './src/component'),
-      '@config': path.resolve(__dirname),
     }
   },
   module: {
     rules: [{
       test: /\.ts$/,
-      exclude: /node_modules/,
+      exclude: path.join(process.cwd(), 'node_modules'),
       enforce: 'pre',
       use: [
         {
@@ -41,13 +37,13 @@ let config = {
     },
     {
       test: /\.ts$/,
-      exclude: /node_modules/,
-      loader: 'awesome-typescript-loader'
+      exclude: path.join(process.cwd(), 'node_modules'),
+      loader: 'ts-loader'
     },
     {
       test: /\.html$/,
       loader: 'raw-loader',
-      exclude: ['./src/index.html']
+      exclude: [path.join(process.cwd(), 'src/index.html'),]
     }
     ]
   },
