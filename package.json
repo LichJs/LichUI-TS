@@ -9,8 +9,8 @@
     "npm": ">=3"
   },
   "scripts": {
-    "build": "cross-env-shell NODE_ENV=production npm run clean && npm run lint && npm run test && npm run compile",
-    "clean": "rimraf dist && rimraf coverage",
+    "build": "cross-env-shell NODE_ENV=production npm run clean && npm run lint && npm run compile",
+    "clean": "rimraf dist",
     "compile": "webpack --config config/webpack.config.prod.js",
     "dev": "webpack-dev-server --config config/webpack.config.dev.js --hot --inline",
     "lint": "tslint src/**/*.ts --fix --project .",
@@ -49,6 +49,8 @@
     "rimraf": "~2.6.2",
     "sass-loader": "~6.0.6",
     "style-loader": "~0.20.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
     "ts-loader": "^5.4.3",
     "tslint": "~5.9.1",
     "tslint-config-standard": "~7.0.0",

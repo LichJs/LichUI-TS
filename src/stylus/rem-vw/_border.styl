@@ -1,0 +1,154 @@
+
+/**
+ * 获取边框某项对应的值,
+ * @example getBorderItemValue( (10px 20px 30px 40px), 2 ) // 20px
+ * @param   {string|list}   $item     某一项或多项的列表.
+ * @param   {number}        $index    下标.
+ * @return  {string}                  项值.
+ */
+getBorderItemValue($item, $index)
+  if length($item) > 1
+    if $index > length($item)
+      $index = 1;
+    $item[$index - 1];
+  else
+    $item
+
+/**
+ * 判断是否为百分比
+ * @param   {number}        $value    值
+ * @return  {boolean}                 是否为百分比
+ */
+is-percentage( $value )
+  type-of($value) == 'unit' and unit($value) == '%'
+
+/**
+ * 元素边框
+ * @param   {string|list}   $direction: all         为all或列表时表示多个方向的边框, 否则为单个边框.
+ * @param   {string|list}   $size:      1px         边框尺寸, 为列表时将按照direction的顺序取值.
+ * @param   {string|list}   $style:     solid       边框样式, 高清设备上仅支持solid, 为列表时将按照direction的顺序取值.
+ * @param   {string|list}   $color:     #ddd        边框颜色, 为列表时将按照direction的顺序取值.
+ * @param   {string}        $position:  relative    元素定位方式, 一般为relative.
+ * @param   {string}        $radius:    0           边框圆角值.
+ */
+border($direction = all, $size = 1px, $style = solid, $color = #dddddd, $position = relative, $radius = 0)
+  /*多个边框*/
+  if $direction == all or length($direction) > 1 
+    /* 普通设备 */
+    @media not screen and (-webkit-min-device-pixel-ratio: 2)
+      border-radius($radius)
+      if $direction == all
+        border: $size $style $color
+      else
+        for $i in (1)..(length($direction))
+          //Function nth is not supported in Stylus
+          //$item = nth($direction, $i)
+          $item = $direction[$i - 1];
+          border-{$item}: getBorderItemValue($size, $i) getBorderItemValue($style, $i) getBorderItemValue($color, $i)
+    /* 高清设备 */
+    @media only screen and (-webkit-min-device-pixel-ratio: 2)
+      border-multiple($direction, $size, $color, $position, $radius)
+  else
+    /* 普通设备 */
+    @media not screen and (-webkit-min-device-pixel-ratio: 2)
+      border-{$direction}: $size $style $color
+    /* 高清设备 */
+    @media only screen and (-webkit-min-device-pixel-ratio: 2)
+      border-single($direction, $size, $color, $position)
+
+/* 实现1物理像素的单条边框线 */
+border-single($direction = bottom, $size = 1px, $color = #dddddd, $position = relative)
+  position: $position
+  &:after
+    content: ""
+    position: absolute
+    {$direction}: 0
+    pointer-events: none
+    background-color: $color
+    @media only screen and (-webkit-min-device-pixel-ratio: 2)
+      transform-origin: 0 0
+    /* 上下 */
+    if $direction == top or $direction == bottom
+      left: 0
+      width: 100%
+      height: $size
+      @media only screen and (-webkit-min-device-pixel-ratio: 2)
+        transform: scaleY(0.5)
+      @media only screen and (-webkit-min-device-pixel-ratio: 3)
+        transform: scaleX(0.33333)
+    else if $direction == left or $direction == right
+      top: 0
+      width: $size
+      height: 100%
+      @media only screen and (-webkit-min-device-pixel-ratio: 2)
+        transform: scaleX(0.5)
+      @media only screen and (-webkit-min-device-pixel-ratio: 3)
+        transform: scaleX(0.33333)
+
+/* 实现1物理像素的多条边框线 */
+border-multiple($direction = all, $size = 1px, $color = #dddddd, $position = relative, $radius = 0)
+  position: $position
+  border-radius($radius)
+  &:after
+    content: ""
+    position: absolute
+    top: 0
+    left: 0
+    pointer-events: none
+    box-sizing: border-box
+    transform-origin: top left
+
+    /* 2倍高清屏, 放大两倍然后缩放.5 */
+    @media only screen and (-webkit-min-device-pixel-ratio: 2)
+      width: 200%
+      height: 200%
+      border-radius($radius, 2)
+      transform: scale(0.5, 0.5)
+
+    /* 3倍高清屏, 放大两倍然后缩放.333333333333 */
+    @media only screen and (-webkit-min-device-pixel-ratio: 3)
+      width: 300%
+      height: 300%
+      border-radius($radius, 3)
+      transform: scale(0.33333, 0.33333)
+    if $direction == all
+      border: $size solid $color
+    else
+      for $i in (1)..(length($direction))
+        $item = $direction[ $i - 1 ];
+        border-{$item}: getBorderItemValue($size, $i) solid getBorderItemValue($color, $i)
+
+/**
+ * 边框圆角, 支持单个值与多个值, 在高清设备下px圆角加倍.
+ *
+ * @example 
+ *  border-radius( (10px 20px 30px 40px), 2) 
+ * output:
+ *  border-top-left-radius: 20px
+ *  border-top-right-radius: 40px
+ *  border-bottom-left-radius: 60px
+ *  border-bottom-right-radius: 80px
+ * 
+ * @example
+ *  border-radius( 10px , 3 )
+ * output:
+ *  border-radius: 30px
+ * -------------------------------------------------
+ * @param   {number|list}   $radius   圆角值
+ * @param   {number}        $ratio    设备像素比
+ */
+border-radius($radius = 0, $ratio = 1)
+  $border-radius-corner = ( top-left top-right bottom-left bottom-right )
+  if ( length($radius) > 1 )
+    for $i in (1)..(length($radius))
+      $item = $radius[ $i - 1 ]
+      $corner = $border-radius-corner[ $i - 1 ]
+      if $ratio == 1 or is-percentage( $item )
+        border-{$corner}-radius $item
+      else 
+        border-{$corner}-radius $item * $ratio
+  else 
+    if $radio == 1 or is-percentage( $radius )
+      border-radius $radius
+    else 
+      border-radius $radius * $ratio

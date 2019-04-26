@@ -4,8 +4,8 @@ import { createRouter } from './createrouter';
 const navbarComponent = () => import('./components/navbar').then(({ NavbarComponent }) => NavbarComponent);
 // const navbarComponent = () => import(/* webpackChunkName: 'navbar' */'./components/navbar').then(({ NavbarComponent }) => NavbarComponent)
 
-import './sass/rem-vw/rem-vw.scss';
-import './sass/main.scss';
+import './stylus/rem-vw/rem-vw.styl';
+import './stylus/main.styl';
 
 if (process.env.ENV === 'development' && module.hot) {
   const navbarModuleId = './components/navbar';

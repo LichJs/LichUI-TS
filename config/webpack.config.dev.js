@@ -19,6 +19,16 @@ webpackConfig.module.rules = [...webpackConfig.module.rules,
     ]
   },
   {
+    test: /\.styl$/,
+    use:[{
+      loader: 'style-loader'
+    },{
+      loader: 'css-loader'
+    },{
+      loader: 'stylus-loader'
+    }]
+  },
+  {
     test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
     loader: 'file-loader'
   }
